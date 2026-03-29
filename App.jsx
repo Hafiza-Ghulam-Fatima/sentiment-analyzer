@@ -40,7 +40,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
-      if (!res.ok) throw new Error((await res.json()).detail || "Error");
+      if (!res.ok) throw new Error((await res.json()).error || "Error");
       setResult(await res.json());
     } catch (e) {
       setError(e.message);
@@ -59,7 +59,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ texts: lines }),
       });
-      if (!res.ok) throw new Error((await res.json()).detail || "Error");
+      if (!res.ok) throw new Error((await res.json()).error || "Error");
       setBatchResult(await res.json());
     } catch (e) {
       setError(e.message);
