@@ -1,0 +1,124 @@
+# 🚀 Complete Deployment Guide
+# SentimentAI — Hugging Face + Vercel
+
+========================================================
+STEP 1 — DEPLOY BACKEND ON HUGGING FACE SPACES
+========================================================
+
+1. Go to https://huggingface.co → Sign Up (free)
+
+2. Click your profile → "New Space"
+   - Space name: sentimentai
+   - SDK: choose "Docker"  ← important
+   - Visibility: Public
+   - Click "Create Space"
+
+3. You'll see a code editor. Upload these files:
+   - hf_api.py       (rename to → app.py on HF)
+   - hf_requirements.txt  (rename to → requirements.txt on HF)
+   - Dockerfile      (create new file, paste content below)
+
+4. Create a file called "Dockerfile" with this content:
+   ─────────────────────────────────────────
+   FROM python:3.10-slim
+   WORKDIR /app
+   COPY requirements.txt .
+   RUN pip install --no-cache-dir -r requirements.txt
+   COPY . .
+   CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
+   ─────────────────────────────────────────
+
+5. Your API will be live at:
+   https://YOUR-USERNAME-sentimentai.hf.space
+
+6. Test it by visiting:
+   https://YOUR-USERNAME-sentimentai.hf.space/docs
+   (FastAPI auto-generates this beautiful documentation!)
+
+========================================================
+STEP 2 — CREATE REACT FRONTEND
+========================================================
+
+On your computer, open PowerShell and run:
+
+   npm create vite@latest sentiment-frontend -- --template react
+   cd sentiment-frontend
+   npm install
+
+Replace src/App.jsx with the provided App.jsx file.
+Replace src/App.css content with just: * { box-sizing: border-box; margin: 0; }
+
+IMPORTANT: Open src/App.jsx and update line 5:
+   const API_URL = "https://YOUR-USERNAME-sentimentai.hf.space";
+   ↑ Replace YOUR-USERNAME with your actual Hugging Face username
+
+Test locally:
+   npm run dev
+   Open http://localhost:5173
+
+========================================================
+STEP 3 — DEPLOY FRONTEND ON VERCEL
+========================================================
+
+1. Push your frontend to GitHub:
+   git init
+   git add .
+   git commit -m "Initial commit: SentimentAI frontend"
+   git branch -M main
+   git remote add origin https://github.com/YOUR-USERNAME/sentiment-frontend.git
+   git push -u origin main
+
+2. Go to https://vercel.com → Sign Up with GitHub (free)
+
+3. Click "Add New Project"
+   → Import your sentiment-frontend repo
+   → Framework: Vite
+   → Click Deploy
+
+4. Your app will be live at:
+   https://sentiment-frontend.vercel.app
+
+========================================================
+FOLDER STRUCTURE FOR HUGGING FACE
+========================================================
+
+On Hugging Face Space, you need exactly these files:
+
+   Space/
+   ├── app.py            (your hf_api.py renamed)
+   ├── requirements.txt  (your hf_requirements.txt renamed)
+   └── Dockerfile
+
+========================================================
+WHAT TO PUT ON LINKEDIN
+========================================================
+
+Suggested post:
+
+"🚀 Just deployed my ML Sentiment Analyzer as a live API!
+
+🔬 What I built:
+• Trained Logistic Regression + Naive Bayes models on text data
+• Built a FastAPI backend hosted on Hugging Face Spaces
+• Created a React frontend deployed on Vercel
+• Anyone in the world can now use my model via API!
+
+🛠 Tech Stack: Python, Scikit-learn, FastAPI, React, Vite
+
+🌐 Live App: [your vercel link]
+🤗 HF Space: [your hugging face link]  
+💻 GitHub: [your github link]
+
+#MachineLearning #OpenSource #HuggingFace #FastAPI #React"
+
+========================================================
+COMMIT STRATEGY FOR GITHUB (to show version history)
+========================================================
+
+Commit 1: "Add dataset and text preprocessing"
+Commit 2: "Add model training pipeline"  
+Commit 3: "Add FastAPI backend"
+Commit 4: "Add React frontend"
+Commit 5: "Deploy to Hugging Face and Vercel"
+
+Never push everything at once — your teacher checks commit history!

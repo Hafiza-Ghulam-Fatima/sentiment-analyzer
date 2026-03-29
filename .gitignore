@@ -1,0 +1,7 @@
+models/*.pkl
+twitter_training.csv
+twitter_validation.csv
+__pycache__/
+*.pyc
+.env
+upload_to_hf.py
