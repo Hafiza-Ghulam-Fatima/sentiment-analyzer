@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // ── Replace this with your actual Hugging Face Space URL after deploying ──
-const API_URL = "https://YOUR-USERNAME-sentimentai.hf.space";
+const API_URL = "https://hafizaghulamfatima55-sentiment-api.hf.space";
 
 const EMOJIS = { positive: "😊", negative: "😠", neutral: "😐" };
 const COLORS = {
